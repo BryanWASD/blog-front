@@ -7,8 +7,8 @@ import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 
 const CreatePostModal = ({ isOpen, onClose, userId, onPostCreated }) => {
-const initialState = { titulo: '', contenido: '', imagen: null, autor: userId };
-  const [newPost, setNewPost] = useState({ initialState });
+  const initialState = { titulo: '', contenido: '', imagen: '', autor: userId };
+  const [newPost, setNewPost] = useState(initialState);
   const toast = useToast();
 
   const onDrop = (acceptedFiles) => {
@@ -27,8 +27,19 @@ const initialState = { titulo: '', contenido: '', imagen: null, autor: userId };
     if (!token) {
       toast({
         title: 'Error',
-        description: 'Debes iniciar sesión para crear una publicación',
+        description: 'Debes iniciar sesión para realizar esta acción',
         status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    if (!newPost.titulo || !newPost.contenido) {
+      toast({
+        title: 'Campos incompletos',
+        description: 'Por favor completa todos los campos antes de enviar',
+        status: 'warning',
         duration: 5000,
         isClosable: true,
       });
@@ -55,7 +66,7 @@ const initialState = { titulo: '', contenido: '', imagen: null, autor: userId };
         duration: 5000,
         isClosable: true,
       });
-      setNewPost({ initialState });
+      setNewPost(initialState);
       onClose();
       if (onPostCreated) {
         onPostCreated();
@@ -70,7 +81,6 @@ const initialState = { titulo: '', contenido: '', imagen: null, autor: userId };
         isClosable: true,
       });
     }
-    console.log(formData.append('autor', userId));
   };
 
   const handleCancel = () => {
