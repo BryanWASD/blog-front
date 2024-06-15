@@ -18,6 +18,7 @@ import {
     MenuList,
     MenuItem,
     useToast,
+    Avatar,
 } from '@chakra-ui/react'
 
 import { ChatIcon, HamburgerIcon } from '@chakra-ui/icons'
@@ -80,8 +81,9 @@ return(
   <CardHeader>
     <Flex spacing='4'>
       <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+      <Avatar size='sm' name={autor}></Avatar>
+      <Heading size='sm'>{autor}</Heading>
         <Box>
-          <Heading size='sm'>{autor}</Heading>
           <Text>{date}</Text>
         </Box>
       </Flex>
